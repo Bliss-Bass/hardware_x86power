@@ -1,0 +1,46 @@
+// Copyright (C) 2024 The Android-x86 Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+
+cc_library_shared {
+    name: "power.x86",
+    relative_install_path: "hw",
+    proprietary: true,
+    srcs: ["power.c"],
+    shared_libs: [
+        "liblog",
+        "libcutils",
+    ],
+}
+
+cc_binary {
+    name: "android.hardware.thermal@2.0-service.x86power",
+    relative_install_path: "hw",
+    // init.rc and VINTF manifest are installed via x86power.mk
+    proprietary: true,
+    srcs: [
+        "thermal/service.cpp",
+        "thermal/Thermal.cpp",
+        "thermal/ThermalHelper.cpp",
+        "thermal/Throttler.cpp",
+        "thermal/X86PowerConfig.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "libbinder",
+        "libhidlbase",
+        "liblog",
+        "libcutils",
+        "libutils",
+        "android.hardware.thermal@1.0",
+        "android.hardware.thermal@2.0",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+}
